@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import time
-
+from winsound import *
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -379,6 +379,15 @@ class Ui_MainWindow(object):
         self.label_6.setText(_translate("MainWindow", ":"))
         self.pushButton.setText(_translate("MainWindow", "START TIMER"))
 
+    def changeSeconds(total_time_in_seconds):
+       while total_time_in_seconds > 0:
+           time.sleep(1)
+           total_time_in_seconds -= 1
+           hours = total_time_in_seconds // (60 * 60)
+           minutes = total_time_in_seconds // 60
+           seconds = total_time_in_seconds % 60
+           timer = str(hours) + " : " + str(minutes) + " : " + str(seconds)
+       PlaySound("C:\\Users\\fly\\src\\timerpy\\beep-2.wav", SND_FILENAME)
         
     def start(self):
        hours = int(self.comboBox.currentText())
@@ -386,19 +395,8 @@ class Ui_MainWindow(object):
        seconds = int(self.comboBox_3.currentText())
        total_time_in_seconds = (hours * 3600) + (minutes * 60) + seconds
        timer = str(hours) + " : " + str(minutes) + " : " + str(seconds)
-       while total_time_in_seconds > 0:
-           time.sleep(1)
-           total_time_in_seconds -= 1
-           if seconds == 0 and minutes > 0:
-               seconds = 59
-               minutes -= 1
-           if minutes == 0 and hours > 0:
-               minutes = 59
-               hours -= 1
-           seconds -= 1
-           timer = str(hours) + " : " + str(minutes) + " : " + str(seconds)
-
        self.label_7.setText(timer)
+       changeSeconds(total_time_in_seconds)
 
 if __name__ == "__main__":
     import sys
